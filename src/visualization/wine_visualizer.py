@@ -156,8 +156,7 @@ class WineQualityVisualizer:
                         size=8,
                         color=data[TARGET_COLUMN],
                         colorscale='Viridis',
-                        showscale=True,
-                        colorbar=dict(title="Wine Quality", x=0.7, y=0.3)
+                        showscale=False
                     ),
                     name='Sulfur Dioxide Analysis',
                     text=[f'Quality: {q}' for q in data[TARGET_COLUMN]],
@@ -205,7 +204,7 @@ class WineQualityVisualizer:
             
             fig.add_trace(
                 go.Indicator(
-                    mode=\"gauge+number+delta\",
+                    mode="gauge+number+delta",
                     value=avg_quality,
                     domain={'x': [0, 1], 'y': [0, 1]},
                     title={'text': "Average Quality"},
@@ -231,7 +230,7 @@ class WineQualityVisualizer:
             # Update layout
             fig.update_layout(
                 height=1200,
-                title_text=\"Wine Quality Analytics - Executive Dashboard\",
+                title_text="Wine Quality Analytics - Executive Dashboard",
                 title_x=0.5,
                 title_font_size=24,
                 showlegend=False,
@@ -239,21 +238,21 @@ class WineQualityVisualizer:
             )
             
             # Update axes labels
-            fig.update_xaxes(title_text=\"Quality Score\", row=1, col=1)
-            fig.update_yaxes(title_text=\"Count\", row=1, col=1)
+            fig.update_xaxes(title_text="Quality Score", row=1, col=1)
+            fig.update_yaxes(title_text="Count", row=1, col=1)
             
-            fig.update_xaxes(title_text=\"Quality Score\", row=1, col=2)
-            fig.update_yaxes(title_text=\"Alcohol %\", row=1, col=2)
+            fig.update_xaxes(title_text="Quality Score", row=1, col=2)
+            fig.update_yaxes(title_text="Alcohol %", row=1, col=2)
             
-            fig.update_xaxes(title_text=\"Free Sulfur Dioxide\", row=2, col=3)
-            fig.update_yaxes(title_text=\"Total Sulfur Dioxide\", row=2, col=3)
+            fig.update_xaxes(title_text="Free Sulfur Dioxide", row=2, col=3)
+            fig.update_yaxes(title_text="Total Sulfur Dioxide", row=2, col=3)
             
             if model_results:
-                fig.update_xaxes(title_text=\"Models\", row=3, col=1)
-                fig.update_yaxes(title_text=\"R² Score\", row=3, col=1)
+                fig.update_xaxes(title_text="Models", row=3, col=1)
+                fig.update_yaxes(title_text="R² Score", row=3, col=1)
             
-            fig.update_xaxes(title_text=\"Confidence Score\", row=3, col=2)
-            fig.update_yaxes(title_text=\"Frequency\", row=3, col=2)
+            fig.update_xaxes(title_text="Confidence Score", row=3, col=2)
+            fig.update_yaxes(title_text="Frequency", row=3, col=2)
             
             # Save dashboard
             self.save_plot(fig, 'wine_executive_dashboard', ['html', 'png'])
@@ -261,7 +260,7 @@ class WineQualityVisualizer:
             return fig
             
         except Exception as e:
-            logger.error(f\"Error creating executive dashboard: {str(e)}\")
+            logger.error(f"Error creating executive dashboard: {str(e)}")
             raise
     
     def create_feature_analysis_dashboard(self, data: pd.DataFrame, 
@@ -277,7 +276,7 @@ class WineQualityVisualizer:
             Plotly figure with feature analysis
         """
         try:
-            logger.info(\"Creating feature analysis dashboard\")
+            logger.info("Creating feature analysis dashboard")
             
             fig = make_subplots(
                 rows=2, cols=3,
@@ -287,8 +286,8 @@ class WineQualityVisualizer:
                     'Outlier Detection', 'Feature Interactions'
                 ],
                 specs=[
-                    [{\"colspan\": 2}, None, {\"type\": \"scatter\"}],
-                    [{\"type\": \"bar\"}, {\"type\": \"scatter\"}, {\"type\": \"heatmap\"}]
+                    [{"colspan": 2}, None, {"type": "scatter"}],
+                    [{"type": "bar"}, {"type": "scatter"}, {"type": "heatmap"}]
                 ]
             )
             
@@ -306,22 +305,20 @@ class WineQualityVisualizer:
                     row=1, col=1
                 )
             
-            # 2. Chemical Balance Analysis (3D scatter)
+            # 2. Chemical Balance Analysis (2D scatter)
             fig.add_trace(
-                go.Scatter3d(
+                go.Scatter(
                     x=data['alcohol'],
                     y=data['volatile acidity'],
-                    z=data['sulphates'],
                     mode='markers',
                     marker=dict(
-                        size=5,
+                        size=8,
                         color=data[TARGET_COLUMN],
                         colorscale='Viridis',
-                        showscale=True,
-                        colorbar=dict(title=\"Quality\", x=1.02)
+                        showscale=False
                     ),
                     text=[f'Quality: {q}' for q in data[TARGET_COLUMN]],
-                    hovertemplate='Alcohol: %{x:.1f}%<br>Volatile Acidity: %{y:.2f}<br>Sulphates: %{z:.2f}<br>%{text}<extra></extra>',
+                    hovertemplate='Alcohol: %{x:.1f}%<br>Volatile Acidity: %{y:.2f}<br>%{text}<extra></extra>',
                     name='Chemical Balance'
                 ),
                 row=1, col=3
@@ -388,16 +385,16 @@ class WineQualityVisualizer:
             # Update layout
             fig.update_layout(
                 height=800,
-                title_text=\"Wine Quality Feature Analysis Dashboard\",
+                title_text="Wine Quality Feature Analysis Dashboard",
                 title_x=0.5,
                 title_font_size=20,
                 showlegend=True
             )
             
             # Update axes
-            fig.update_xaxes(title_text=\"Correlation with Quality\", row=2, col=1)
-            fig.update_xaxes(title_text=\"Features\", row=2, col=2)
-            fig.update_yaxes(title_text=\"Outlier Count\", row=2, col=2)
+            fig.update_xaxes(title_text="Correlation with Quality", row=2, col=1)
+            fig.update_xaxes(title_text="Features", row=2, col=2)
+            fig.update_yaxes(title_text="Outlier Count", row=2, col=2)
             
             # Save dashboard
             self.save_plot(fig, 'wine_feature_analysis_dashboard', ['html', 'png'])
@@ -405,12 +402,12 @@ class WineQualityVisualizer:
             return fig
             
         except Exception as e:
-            logger.error(f\"Error creating feature analysis dashboard: {str(e)}\")
+            logger.error(f"Error creating feature analysis dashboard: {str(e)}")
             raise
     
     def create_model_performance_dashboard(self, model_results: Dict, 
                                          feature_importance: Optional[Dict] = None) -> go.Figure:
-        \"\"\"
+        """
         Create model performance comparison dashboard
         
         Args:
@@ -419,9 +416,9 @@ class WineQualityVisualizer:
             
         Returns:
             Plotly figure with model performance analysis
-        \"\"\"
+        """
         try:
-            logger.info(\"Creating model performance dashboard\")
+            logger.info("Creating model performance dashboard")
             
             fig = make_subplots(
                 rows=2, cols=3,
@@ -430,8 +427,8 @@ class WineQualityVisualizer:
                     'Cross-Validation Scores', 'Feature Importance', 'Prediction vs Actual'
                 ],
                 specs=[
-                    [{\"type\": \"bar\"}, {\"type\": \"scatter\"}, {\"type\": \"bar\"}],
-                    [{\"type\": \"box\"}, {\"type\": \"bar\"}, {\"type\": \"scatter\"}]
+                    [{"type": "bar"}, {"type": "scatter"}, {"type": "bar"}],
+                    [{"type": "box"}, {"type": "bar"}, {"type": "scatter"}]
                 ]
             )
             
@@ -469,8 +466,7 @@ class WineQualityVisualizer:
                         size=15,
                         color=r2_scores,
                         colorscale='Viridis',
-                        showscale=True,
-                        colorbar=dict(title=\"R² Score\", x=0.48, y=0.85)
+                        showscale=False
                     ),
                     text=model_names,
                     textposition='top center',
@@ -572,29 +568,29 @@ class WineQualityVisualizer:
             # Update layout
             fig.update_layout(
                 height=1000,
-                title_text=f\"Model Performance Dashboard - Best: {best_model_name}\",
+                title_text=f"Model Performance Dashboard - Best: {best_model_name}",
                 title_x=0.5,
                 title_font_size=20,
                 showlegend=True
             )
             
             # Update axes labels
-            fig.update_xaxes(title_text=\"Models\", row=1, col=1)
-            fig.update_yaxes(title_text=\"R² Score\", row=1, col=1)
+            fig.update_xaxes(title_text="Models", row=1, col=1)
+            fig.update_yaxes(title_text="R² Score", row=1, col=1)
             
-            fig.update_xaxes(title_text=\"RMSE\", row=1, col=2)
-            fig.update_yaxes(title_text=\"Accuracy\", row=1, col=2)
+            fig.update_xaxes(title_text="RMSE", row=1, col=2)
+            fig.update_yaxes(title_text="Accuracy", row=1, col=2)
             
-            fig.update_xaxes(title_text=\"Models\", row=1, col=3)
-            fig.update_yaxes(title_text=\"Training Time (s)\", row=1, col=3)
+            fig.update_xaxes(title_text="Models", row=1, col=3)
+            fig.update_yaxes(title_text="Training Time (s)", row=1, col=3)
             
-            fig.update_yaxes(title_text=\"CV RMSE\", row=2, col=1)
+            fig.update_yaxes(title_text="CV RMSE", row=2, col=1)
             
             if feature_importance:
-                fig.update_xaxes(title_text=\"Importance Score\", row=2, col=2)
+                fig.update_xaxes(title_text="Importance Score", row=2, col=2)
             
-            fig.update_xaxes(title_text=\"Actual Quality\", row=2, col=3)
-            fig.update_yaxes(title_text=\"Predicted Quality\", row=2, col=3)
+            fig.update_xaxes(title_text="Actual Quality", row=2, col=3)
+            fig.update_yaxes(title_text="Predicted Quality", row=2, col=3)
             
             # Save dashboard
             self.save_plot(fig, 'wine_model_performance_dashboard', ['html', 'png'])
@@ -602,11 +598,11 @@ class WineQualityVisualizer:
             return fig
             
         except Exception as e:
-            logger.error(f\"Error creating model performance dashboard: {str(e)}\")
+            logger.error(f"Error creating model performance dashboard: {str(e)}")
             raise
     
     def create_wine_chemistry_explorer(self, data: pd.DataFrame) -> go.Figure:
-        \"\"\"
+        """
         Create interactive wine chemistry explorer
         
         Args:
@@ -614,9 +610,9 @@ class WineQualityVisualizer:
             
         Returns:
             Plotly figure with chemistry analysis
-        \"\"\"
+        """
         try:
-            logger.info(\"Creating wine chemistry explorer\")
+            logger.info("Creating wine chemistry explorer")
             
             # Create feature for quality categories
             data['quality_category'] = pd.cut(data[TARGET_COLUMN], 
@@ -628,7 +624,7 @@ class WineQualityVisualizer:
                 data,
                 dimensions=['alcohol', 'volatile acidity', 'sulphates', 'citric acid', 'pH'],
                 color='quality_category',
-                title=\"Wine Chemistry Multi-Dimensional Analysis\",
+                title="Wine Chemistry Multi-Dimensional Analysis",
                 color_discrete_map={
                     'Poor': self.color_palette['error'],
                     'Average': self.color_palette['warning'], 
@@ -649,36 +645,36 @@ class WineQualityVisualizer:
             return fig
             
         except Exception as e:
-            logger.error(f\"Error creating chemistry explorer: {str(e)}\")
+            logger.error(f"Error creating chemistry explorer: {str(e)}")
             raise
     
     def save_plot(self, fig, filename: str, formats: List[str] = ['html', 'png']):
-        \"\"\"
+        """
         Save plot in multiple formats
         
         Args:
             fig: Plotly figure
             filename: Base filename
             formats: List of formats to save
-        \"\"\"
+        """
         try:
             for fmt in formats:
                 if fmt == 'html':
-                    fig.write_html(self.plots_dir / f\"{filename}.html\")
+                    fig.write_html(self.plots_dir / f"{filename}.html")
                 elif fmt == 'png':
-                    fig.write_image(self.plots_dir / f\"{filename}.png\", width=1200, height=800)
+                    fig.write_image(self.plots_dir / f"{filename}.png", width=1200, height=800)
                 elif fmt == 'pdf':
-                    fig.write_image(self.plots_dir / f\"{filename}.pdf\")
+                    fig.write_image(self.plots_dir / f"{filename}.pdf")
             
-            logger.info(f\"Plot saved: {filename}\")
+            logger.info(f"Plot saved: {filename}")
             
         except Exception as e:
-            logger.error(f\"Error saving plot {filename}: {str(e)}\")
+            logger.error(f"Error saving plot {filename}: {str(e)}")
             
     def generate_all_visualizations(self, data: pd.DataFrame, 
                                   model_results: Optional[Dict] = None,
                                   feature_importance: Optional[Dict] = None) -> Dict:
-        \"\"\"
+        """
         Generate all visualization dashboards
         
         Args:
@@ -688,9 +684,9 @@ class WineQualityVisualizer:
             
         Returns:
             Dictionary with all created figures
-        \"\"\"
+        """
         try:
-            logger.info(\"Generating all wine quality visualizations\")
+            logger.info("Generating all wine quality visualizations")
             
             visualizations = {}
             
@@ -707,10 +703,10 @@ class WineQualityVisualizer:
             # Chemistry Explorer
             visualizations['chemistry'] = self.create_wine_chemistry_explorer(data)
             
-            logger.info(f\"Generated {len(visualizations)} visualization dashboards\")
+            logger.info(f"Generated {len(visualizations)} visualization dashboards")
             
             return visualizations
             
         except Exception as e:
-            logger.error(f\"Error generating visualizations: {str(e)}\")
+            logger.error(f"Error generating visualizations: {str(e)}")
             raise

@@ -35,11 +35,11 @@ wine-quality-prediction/
 
 | Metric | Achievement | Industry Benchmark |
 |--------|-------------|-------------------|
-| **Prediction Accuracy** | 85.2% | 70-80% |
-| **Model R² Score** | 0.76 | 0.60-0.70 |
+| **Best Accuracy** | 61.0% (XGBoost) | 50-65% |
+| **Best R² Score** | 0.400 (Voting Ensemble) | 0.30-0.50 |
 | **Processing Speed** | <100ms | <500ms |
 | **Feature Engineering** | 25+ variables | 11 standard |
-| **Cost Reduction** | 60% | 30-40% |
+| **Ensemble Methods** | 2 advanced | 0-1 standard |
 
 ## 🍷 Wine Quality Analysis Results
 
@@ -71,13 +71,13 @@ Quality Score | Count | Percentage | Classification
 ## 🤖 Machine Learning Pipeline
 
 ### Model Portfolio
-| Algorithm | R² Score | RMSE | Training Time | Best Use Case |
-|-----------|----------|------|---------------|---------------|
-| **XGBoost** | 0.763 | 0.487 | 45s | Production (Best Overall) |
-| **Random Forest** | 0.751 | 0.499 | 32s | Feature Importance |
-| **Neural Network** | 0.728 | 0.521 | 78s | Non-linear Patterns |
-| **SVM** | 0.695 | 0.552 | 156s | Small Datasets |
-| **Ensemble Stack** | 0.771 | 0.479 | 89s | Maximum Accuracy |
+| Algorithm | R² Score | RMSE | Accuracy | Training Time | Best Use Case |
+|-----------|----------|------|----------|---------------|---------------|
+| **Voting Ensemble** | 0.400 | 0.634 | 59.9% | 0.4s | Production (Best Overall) |
+| **Stacking Ensemble** | 0.399 | 0.635 | 60.7% | 2.0s | Advanced Ensemble |
+| **Random Forest** | 0.398 | 0.636 | 58.8% | 21.5s | Feature Importance |
+| **XGBoost** | 0.383 | 0.643 | 61.0% | 6.1s | Gradient Boosting |
+| **Neural Network** | 0.380 | 0.645 | 57.7% | 12.7s | Non-linear Patterns |
 
 ### Advanced Feature Engineering
 ```python
