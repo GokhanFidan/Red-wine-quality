@@ -75,32 +75,20 @@ class WineQualityModelSuite:
             logger.info("Initializing machine learning models")
             
             models = {
-                # Tree-based models
+                # Tree-based models (keep the best)
                 'random_forest': RandomForestRegressor(
                     random_state=RANDOM_STATE,
                     n_jobs=-1
                 ),
-                'decision_tree': DecisionTreeRegressor(
-                    random_state=RANDOM_STATE
-                ),
                 
-                # Linear models
+                # Linear models (keep only good performers)
                 'linear_regression': LinearRegression(),
                 'ridge': Ridge(random_state=RANDOM_STATE),
-                'lasso': Lasso(random_state=RANDOM_STATE),
-                'elastic_net': ElasticNet(random_state=RANDOM_STATE),
                 
-                # Support Vector Machine
-                'svm': SVR(),
-                
-                # Neural Network
-                'neural_network': MLPRegressor(
-                    random_state=RANDOM_STATE,
-                    max_iter=1000
-                ),
-                
-                # K-Nearest Neighbors
-                'knn': KNeighborsRegressor()
+                # Gradient Boosting (will add XGBoost separately)
+                # Removed: decision_tree (overfitting), lasso (too aggressive), 
+                # elastic_net (too aggressive), neural_network (slow/mediocre), 
+                # svm (mediocre), knn (mediocre)
             }
             
             # Add XGBoost if available
